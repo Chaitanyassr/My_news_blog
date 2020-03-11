@@ -60,3 +60,117 @@ Oh and if you have an old domain lying around, just use that. Why? The older you
 Note on subdomains: every subdomain, to Google, is a different website. So if your domain is flaviocopes.com, and you create your blog in blog.flaviocopes.com, then that’s a completely new website to Google, and it will have its own ranking separate from the main domain.
 
 My suggestion is to avoid subdomains completely.
+
+Install Hugo
+To install Hugo on macOS, from your terminal run
+
+brew install hugo
+The brew command does not exist on your Mac? Check the Homebrew guide.
+
+For Windows and Linux, check the official installation guide.
+
+Create a Hugo site
+Once Hugo is installed, you can create a Hugo site by running
+
+hugo new site myblog
+I suggest that you run this into a www folder in your Home directory, because the command will create a new myblog folder where you run it.
+
+
+Pick a theme
+Now before you can start you need to pick a theme. I wish Hugo included a default theme to make things straightforward, but it does not.
+
+There are a lot of choices on https://themes.gohugo.io. My personal recommendation is to start with https://themes.gohugo.io/ghostwriter/ and tweak it later.
+
+I also recommend that you avoid the git clone workflow they suggest on that page. You’ll surely be tweaking the theme in the future, and I find it best to have a single repository for both content and theme. It simplifies deployment.
+
+So, go to https://github.com/jbub/ghostwriter/archive/master.zip to download the current version of the theme.
+
+Then unpackage it in the themes/ghostwriter folder in your newly created Hugo website:
+
+
+Notice there is an exampleSite folder in the themes/ghostwriter. Open it, and open its content subfolder. In there, you can see the page, post and project subfolders.
+
+
+Copy page and post in the content folder of the site:
+
+
+The configuration
+The sample data also provide a sample config.toml file in themes/ghostwriter/exampleSite/config.toml. This is the Hugo configuration file, which tells Hugo some details of the configuration without you having to hardcode information in the theme.
+
+I recommend that you not copy that, because it has too many things, and instead use this:
+
+baseurl = "/"
+title = "My blog"
+theme = "ghostwriter"
+
+[Params]
+    mainSections = ["post"]
+    intro = true
+    headline = "My headline"
+    description = "My description"
+    github = "https://github.com/XXX"
+    twitter = "https://twitter.com/XXX"
+    email = "XXX@example.com"
+    opengraph = true
+    shareTwitter = true
+    dateFormat = "Mon, Jan 2, 2006"
+
+[Permalinks]
+    post = "/:filename/"
+You can freely customize the information in this file later.
+
+Now from the command line, run:
+
+hugo serve
+
+Open http://localhost:1313 in your browser, and you should be able to see the site live!
+
+
+This is the site home page.
+
+There is a list of posts that is taken from the content/post folder of your website:
+
+
+Click the first, called “Creating a New Theme”:
+
+
+You can open the file content/post/creating-a-new-theme.md to change anything in the post.
+
+
+If you save, the website will automatically update with the new content.
+
+
+This is pretty awesome, right?
+
+You can create a new post by creating a new .md file, prefixing it with anything you want. You can use incremental numbers, if you prefer. Or use a date.
+
+If something doesn't look the way you want, you can open the themes/ghostwriter/layouts folder and tweak it.
+
+The “post” template is defined in themes/ghostwriter/layouts/post/single.html:
+
+
+Hugo uses Go templates. The syntax can be pretty unfamiliar but the Hugo website does a very good job at explaining them in this Go templates introduction.
+
+However, try to not look at customizing your template now.
+
+If you want to tweak the colors, add a <style> tag with some CSS in the themes/ghostwriter/layouts/partials/header.html.
+
+For example, make links black:
+
+<style>
+.site-title a, .button-square {
+    background: black;
+}
+a {
+    color: black;
+}
+</style>
+Focus on the content instead.
+
+Remove the existing files, and write 2-3 posts to start with.
+
+It’s too easy to get trapped in making things perfectly the way you want, but the important thing is the content.
+
+And the cleaner your site is, the better for your readers.
+
+Let me now write a little about deployment.
